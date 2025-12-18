@@ -1,0 +1,107 @@
+// src/app/products/products.component.scss
+
+// Badges
+.badge-new {
+    @apply bg-green-500 text-white font-bold px-3 py-1 rounded-full text-xs;
+  }
+  
+  .badge-sale {
+    @apply bg-primary-pink text-white font-bold px-3 py-1 rounded-full text-xs;
+  }
+  
+  .badge-trending {
+    @apply bg-orange-500 text-white font-bold px-3 py-1 rounded-full text-xs;
+  }
+  
+  // Custom scrollbar for filter panels
+  .filter-scrollbar {
+    &::-webkit-scrollbar {
+      width: 4px;
+    }
+    
+    &::-webkit-scrollbar-track {
+      @apply bg-neutral-100;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+      @apply bg-neutral-300 rounded-full;
+      
+      &:hover {
+        @apply bg-neutral-400;
+      }
+    }
+  }
+  
+  // Product card hover effects
+  .card-product {
+    @apply transition-all duration-300;
+    
+    &:hover {
+      @apply transform -translate-y-1 shadow-lg;
+    }
+  }
+  
+  // Image gallery zoom
+  .gallery-image {
+    @apply transition-transform duration-700;
+    
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+  
+  // Color swatches
+  .color-swatch {
+    @apply transition-transform duration-300;
+    
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+  
+  // Custom range slider
+  .range-slider {
+    -webkit-appearance: none;
+    
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      @apply h-4 w-4 rounded-full bg-primary-pink cursor-pointer;
+    }
+    
+    &::-moz-range-thumb {
+      @apply h-4 w-4 rounded-full bg-primary-pink cursor-pointer border-0;
+    }
+  }
+  
+  // Accordion animation
+  .accordion-content {
+    @apply transition-all duration-300 ease-in-out;
+    overflow: hidden;
+    
+    &.closed {
+      max-height: 0;
+      opacity: 0;
+    }
+    
+    &.open {
+      max-height: 500px;
+      opacity: 1;
+    }
+  }
+  
+  // Responsive adjustments
+  @media (max-width: 768px) {
+    .product-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .product-detail {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  @media (max-width: 640px) {
+    .product-grid {
+      grid-template-columns: 1fr;
+    }
+  }

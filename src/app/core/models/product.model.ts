@@ -1,21 +1,55 @@
-// product.model.ts
+// src/app/core/models/product.model.ts
 export interface Product {
     id: number;
     name: string;
+    slug: string;
+    description: string;
     price: number;
     originalPrice?: number;
-    slug: string;
-    description?: string;
+    images: string[]; // URLs des images
+    stock: number;
+    brand: string;
+    rating: number;
+    reviews: number;
     
-    // Rendez certaines propriétés obligatoires si elles sont utilisées
-    images: string[];  // Pas optionnel
-    stock: number;     // Pas optionnel
-    brand: string;     // Pas optionnel
-    rating: number;    // Pas optionnel
+    // Filtres
+    category: string;
+    subcategory?: string;
+    sizes: string[];
+    colors: string[];
+    tags: string[];
     
-    // Gardez ceux-ci optionnels
-    newArrival?: boolean;
-    trending?: boolean;
-    reviews?: number;
+    // Métadonnées
+    newArrival: boolean;
+    trending: boolean;
+    bestSeller: boolean;
+    featured: boolean;
+    
+    // Spécifications
+    material?: string;
+    careInstructions?: string;
+    dimensions?: string;
+    weight?: number;
+    
+    // SEO
+    metaTitle?: string;
+    metaDescription?: string;
+    
+    // Dates
+    createdAt: Date;
+    updatedAt: Date;
+  }
+  
+  export interface ProductFilter {
+    categories?: string[];
+    priceRange?: { min: number; max: number };
+    sizes?: string[];
     colors?: string[];
+    brands?: string[];
+    ratings?: number[];
+    sortBy?: 'price-asc' | 'price-desc' | 'newest' | 'rating' | 'name';
+    inStock?: boolean;
+    onSale?: boolean;
+    newArrivals?: boolean;
+    trending?: boolean;
   }

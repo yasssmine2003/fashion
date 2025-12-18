@@ -55,6 +55,7 @@ const routes: Routes = [
     redirectTo: '',
     pathMatch: 'full'
   },
+  { path: 'products', loadChildren: () => import('./products/products.module').then(m => m.ProductsModule) },
   
   // 404 Not Found (À créer plus tard)
   {
