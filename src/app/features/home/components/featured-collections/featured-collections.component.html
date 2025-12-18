@@ -1,0 +1,69 @@
+<section class="py-20 bg-neutral-50">
+    <div class="container-custom">
+      
+      <!-- Section Header -->
+      <div class="text-center mb-16" data-aos="fade-up">
+        <h2 class="text-4xl md:text-5xl font-heading font-bold text-neutral-900 mb-4">
+          Collections Tendances
+        </h2>
+        <p class="text-lg text-neutral-600 max-w-2xl mx-auto">
+          Découvrez nos collections soigneusement sélectionnées pour sublimer votre style
+        </p>
+      </div>
+  
+      <!-- Collections Grid -->
+      <div class="grid md:grid-cols-3 gap-8">
+        <div 
+          *ngFor="let collection of collections; let i = index"
+          (click)="navigateToCollection(collection.link)"
+          class="group cursor-pointer relative overflow-hidden rounded-3xl h-[500px] transform hover:scale-105 transition-all duration-500 shadow-lg hover:shadow-2xl"
+          [attr.data-aos]="'fade-up'"
+          [attr.data-aos-delay]="i * 100">
+          
+          <!-- Background Image -->
+          <div class="absolute inset-0">
+            <img 
+              [src]="collection.image" 
+              [alt]="collection.title"
+              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+            
+            <!-- Overlay -->
+            <div 
+              class="absolute inset-0 opacity-60 group-hover:opacity-70 transition-opacity duration-300"
+              [style.background]="'linear-gradient(180deg, transparent 0%, ' + collection.bgColor + ' 100%)'">
+            </div>
+          </div>
+  
+          <!-- Content -->
+          <div class="relative h-full flex flex-col justify-end p-8">
+            <h3 
+              class="text-3xl font-heading font-bold mb-3 transform group-hover:translate-y-0 translate-y-2 transition-transform duration-300"
+              [style.color]="collection.textColor">
+              {{ collection.title }}
+            </h3>
+            
+            <p 
+              class="text-sm mb-6 opacity-90 transform group-hover:translate-y-0 translate-y-2 transition-transform duration-300 delay-75"
+              [style.color]="collection.textColor">
+              {{ collection.description }}
+            </p>
+            
+            <button 
+              class="inline-flex items-center gap-2 font-semibold group-hover:gap-4 transition-all duration-300"
+              [style.color]="collection.textColor">
+              Découvrir
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+              </svg>
+            </button>
+          </div>
+  
+          <!-- Decorative Corner -->
+          <div 
+            class="absolute top-4 right-4 w-16 h-16 rounded-full opacity-50 blur-2xl"
+            [style.background-color]="collection.bgColor">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>

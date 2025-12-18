@@ -1,0 +1,121 @@
+<div 
+  class="card-product cursor-pointer group relative"
+  (click)="viewProduct()"
+  (mouseenter)="isHovered = true"
+  (mouseleave)="isHovered = false">
+  
+  <!-- Image Container -->
+  <div class="relative overflow-hidden aspect-[3/4] bg-neutral-100">
+    <!-- Product Image -->
+    <img 
+      [src]="product.images[0]" 
+      [alt]="product.name"
+      class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+    
+    <!-- Badges -->
+    <div class="absolute top-3 left-3 flex flex-col gap-2">
+      <span *ngIf="product.newArrival" class="badge-new">NEW</span>
+      <span *ngIf="isOnSale" class="badge-sale">-{{ discountPercentage }}%</span>
+      <span *ngIf="product.trending" class="badge-trending">🔥 TRENDING</span>
+    </div>
+
+    <!-- Quick Actions (visible on hover) -->
+    <div 
+      class="absolute top-3 right-3 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+      <!-- Wishlist -->
+      <button 
+        (click)="onAddToWishlist($event)"
+        class="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-primary-pink hover:text-white transition-all duration-300 transform hover:scale-110"
+        aria-label="Ajouter aux favoris">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+        </svg>
+      </button>
+
+      <!-- Quick View -->
+      <button 
+        class="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-primary-pink hover:text-white transition-all duration-300 transform hover:scale-110"
+        aria-label="Aperçu rapide">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Add to Cart Button (visible on hover) -->
+    <div 
+      class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+      <button 
+        (click)="onAddToCart($event)"
+        class="w-full btn-primary bg-white text-neutral-900 hover:bg-primary-pink hover:text-white py-3 flex items-center justify-center gap-2">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+        </svg>
+        Ajouter au panier
+      </button>
+    </div>
+
+    <!-- Out of Stock Overlay -->
+    <div *ngIf="product.stock === 0" 
+         class="absolute inset-0 bg-black/60 flex items-center justify-center">
+      <span class="bg-white text-neutral-900 px-6 py-3 rounded-lg font-bold">
+        Rupture de stock
+      </span>
+    </div>
+  </div>
+
+  <!-- Product Info -->
+  <div class="p-4">
+    <!-- Brand -->
+    <p class="text-xs text-neutral-500 uppercase tracking-wide mb-1">
+      {{ product.brand }}
+    </p>
+
+    <!-- Name -->
+    <h3 class="font-semibold text-neutral-900 mb-2 line-clamp-2 group-hover:text-primary-coral transition-colors duration-300">
+      {{ product.name }}
+    </h3>
+
+    <!-- Rating -->
+    <div class="flex items-center gap-2 mb-3">
+      <div class="flex items-center">
+        <svg *ngFor="let star of [1,2,3,4,5]" 
+             class="w-4 h-4"
+             [class.text-primary-yellow]="star <= product.rating"
+             [class.text-neutral-300]="star > product.rating"
+             fill="currentColor" viewBox="0 0 20 20">
+          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+        </svg>
+      </div>
+      <span class="text-sm text-neutral-600">
+        ({{ product.reviews }})
+      </span>
+    </div>
+
+    <!-- Price -->
+    <div class="flex items-center gap-2">
+      <span class="text-xl font-bold text-neutral-900">
+        {{ product.price }} TND
+      </span>
+      <span *ngIf="product.originalPrice" class="text-sm text-neutral-400 line-through">
+        {{ product.originalPrice }} TND
+      </span>
+    </div>
+
+    <!-- Colors (if available) -->
+    <div *ngIf="product.colors && product.colors.length > 0" class="flex items-center gap-2 mt-3">
+      <span class="text-xs text-neutral-500">Couleurs:</span>
+      <div class="flex gap-1">
+        <div *ngFor="let color of product.colors.slice(0, 4)" 
+             class="w-5 h-5 rounded-full border-2 border-neutral-200"
+             [style.background-color]="color"
+             [title]="color">
+        </div>
+        <span *ngIf="product.colors.length > 4" class="text-xs text-neutral-500">
+          +{{ product.colors.length - 4 }}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

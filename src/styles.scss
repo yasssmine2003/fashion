@@ -1,0 +1,202 @@
+/* You can add global styles to this file, and also import other style files */
+// Tailwind CSS
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+// Import Google Fonts
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap');
+
+// NGX-Toastr
+@import 'ngx-toastr/toastr';
+
+// AOS Animations
+@import 'aos/dist/aos.css';
+
+// Swiper
+
+// Custom Global Styles
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #1A1A1A;
+  background-color: #FFFFFF;
+  overflow-x: hidden;
+}
+
+// Typography Utilities
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #1A1A1A;
+}
+
+h1 {
+  font-size: 3.5rem;
+  @media (max-width: 768px) {
+    font-size: 2.5rem;
+  }
+}
+
+h2 {
+  font-size: 2.5rem;
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
+}
+
+h3 {
+  font-size: 2rem;
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+  }
+}
+
+// Custom Components Styles
+@layer components {
+  // Button Primary
+  .btn-primary {
+    @apply bg-neutral-900 text-white px-8 py-3 rounded-lg font-semibold 
+           transition-all duration-300 hover:bg-neutral-800 hover:scale-105 
+           hover:shadow-lg active:scale-95;
+  }
+
+  // Button Secondary (Pink Theme)
+  .btn-secondary {
+    @apply bg-primary-pink text-neutral-900 px-8 py-3 rounded-lg font-semibold 
+           transition-all duration-300 hover:bg-primary-coral hover:text-white 
+           hover:scale-105 hover:shadow-pink active:scale-95;
+  }
+
+  // Button Outline
+  .btn-outline {
+    @apply border-2 border-neutral-900 text-neutral-900 px-8 py-3 rounded-lg 
+           font-semibold transition-all duration-300 hover:bg-neutral-900 
+           hover:text-white hover:scale-105 active:scale-95;
+  }
+
+  // Card Product
+  .card-product {
+    @apply bg-white rounded-2xl overflow-hidden shadow-soft 
+           transition-all duration-300 hover:shadow-soft-lg hover:-translate-y-1;
+  }
+
+  // Input Field
+  .input-field {
+    @apply w-full px-4 py-3 border-2 border-neutral-200 rounded-lg 
+           focus:border-primary-pink focus:outline-none focus:ring-2 
+           focus:ring-primary-pink/20 transition-all duration-300;
+  }
+
+  // Badge
+  .badge {
+    @apply inline-block px-3 py-1 text-xs font-semibold rounded-full;
+  }
+
+  .badge-new {
+    @apply badge bg-primary-yellow text-neutral-900;
+  }
+
+  .badge-sale {
+    @apply badge bg-error text-white;
+  }
+
+  .badge-trending {
+    @apply badge bg-primary-pink text-white;
+  }
+
+  // Container
+  .container-custom {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+}
+
+// Custom Utilities
+@layer utilities {
+  // Text Gradient
+  .text-gradient-pink {
+    @apply bg-gradient-to-r from-primary-pink to-primary-coral bg-clip-text text-transparent;
+  }
+
+  .text-gradient-yellow {
+    @apply bg-gradient-to-r from-primary-yellow to-accent-peach bg-clip-text text-transparent;
+  }
+
+  // Glassmorphism
+  .glass {
+    @apply bg-white/70 backdrop-blur-md border border-white/20;
+  }
+
+  // Smooth Transitions
+  .transition-smooth {
+    @apply transition-all duration-300 ease-in-out;
+  }
+}
+
+// Custom Scrollbar
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #FFB6C1;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #FF6B9D;
+}
+
+// Selection Color
+::selection {
+  background: #FFB6C1;
+  color: #FFFFFF;
+}
+
+// Loading Spinner
+.spinner {
+  border: 4px solid #F5F5F5;
+  border-top: 4px solid #FFB6C1;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+// Custom NGX-Toastr Styles (Pink Theme)
+.toast-success {
+  background-color: #4ADE80 !important;
+}
+
+.toast-error {
+  background-color: #EF4444 !important;
+}
+
+.toast-info {
+  background-color: #FFB6C1 !important;
+}
+
+.toast-warning {
+  background-color: #FBBF24 !important;
+}

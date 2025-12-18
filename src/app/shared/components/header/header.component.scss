@@ -1,0 +1,32 @@
+// Animations pour le dropdown
+@keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .animate-slide-down {
+    animation: slideDown 0.3s ease-out;
+  }
+  
+  // Active link styles
+  a.active {
+    color: #FF6B9D;
+    position: relative;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(to right, #FFB6C1, #FF6B9D);
+      border-radius: 2px;
+    }
+  }
