@@ -31,7 +31,7 @@ export class FeaturedCollectionsComponent {
       id: 2,
       title: 'Summer Vibes',
       description: 'Light and breezy outfits perfect for sunny days',
-      image: 'https://images.unsplash.com/photo-1523359346063-d879354c0ea5?w=600&q=80',
+      image: 'https://images.unsplash.com/photo-1760172551779-5bd7f920a54b?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       link: '/products?collection=summer',
       bgColor: '#FFB6C1',
       textColor: '#FFFFFF'
@@ -40,7 +40,7 @@ export class FeaturedCollectionsComponent {
       id: 3,
       title: 'Cozy Winter',
       description: 'Stay warm and stylish with our winter essentials',
-      image: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=600&q=80',
+      image: 'https://images.unsplash.com/photo-1760856269352-d0d5ca6ad3c7?q=80&w=627&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       link: '/products?collection=winter',
       bgColor: '#C8B6FF',
       textColor: '#FFFFFF'

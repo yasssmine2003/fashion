@@ -34,7 +34,7 @@ export class HeroSectionComponent implements OnInit {
     {
       id: 2,
       title: "NEW COLLECTION",
-      subtitle: "WINTER 2024",
+      subtitle: "WINTER 2025",
       description: "Discover our cozy and trendy winter collection",
       image: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=800&q=80",
       buttonText: "DISCOVER",
