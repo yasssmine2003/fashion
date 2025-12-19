@@ -16,7 +16,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
     '1445205170230-053b83016050',
     '1539008835657-9e8e9680c956',
     '1564859228273-274232fdb516',
-    '1558769132-cb1aea1c36ec',
     '1521572163474-6864f9cf17ab'
   ];
 

@@ -45,8 +45,8 @@ export class ProductService {
     },
     {
       id: 2,
-      name: 'Blazer Structuré Noir',
-      slug: 'blazer-structure-noir',
+      name: 'Blazer Structuré ',
+      slug: 'blazer-structure',
       description: 'Blazer professionnel noir avec coupe structurée pour un look sophistiqué.',
       price: 129.99,
       images: [
@@ -133,8 +133,8 @@ export class ProductService {
       price: 65.99,
       originalPrice: 85.99,
       images: [
-        'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=800&auto=format&fit=crop',
-        'https://images.unsplash.com/photo-1583496661160-fb5886a0aaaa?w=800&auto=format&fit=crop'
+        'https://stylee.fr/wp-content/uploads/jupe-midi-plissee-tie-dye-Gerard-Darel.png',
+        'https://stylee.fr/wp-content/uploads/jupe-midi-plissee-tie-dye-Gerard-Darel.png'
       ],
       stock: 12,
       brand: 'Feminine Style',
@@ -160,8 +160,8 @@ export class ProductService {
       description: 'Manteau trench classique en couleur camel, indispensable pour toute garde-robe.',
       price: 189.99,
       images: [
-        'https://images.unsplash.com/photo-1552374196-c4e7ffc6e126?w=800&auto=format&fit=crop',
-        'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=800&auto=format&fit=crop'
+        'https://media.istockphoto.com/id/1416182977/photo/beautiful-young-blonde-woman-in-an-orange-trench-coat-among-the-horses-at-the-horse-farm.jpg?s=2048x2048&w=is&k=20&c=qeo4bV8E-OOM3nqiK8UlaBL-26hvYegmPEsbsGUPNOs=',
+        'https://media.istockphoto.com/id/1416182977/photo/beautiful-young-blonde-woman-in-an-orange-trench-coat-among-the-horses-at-the-horse-farm.jpg?s=2048x2048&w=is&k=20&c=qeo4bV8E-OOM3nqiK8UlaBL-26hvYegmPEsbsGUPNOs='
       ],
       stock: 6,
       brand: 'Classic Coat',
@@ -190,8 +190,8 @@ export class ProductService {
           description: 'Chemisier élégant en soie avec broderies délicates, parfait pour les occasions spéciales.',
           price: 119.99,
           images: [
-            'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=800&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1583496661160-fb5886a0aaaa?w=800&auto=format&fit=crop'
+            'https://i.etsystatic.com/20157170/c/1916/1916/205/0/il/b74510/5826375990/il_300x300.5826375990_q0yw.jpg',
+            'https://i.etsystatic.com/20157170/c/1916/1916/205/0/il/b74510/5826375990/il_300x300.5826375990_q0yw.jpg'
           ],
           stock: 9,
           brand: 'Luxe Silk',
@@ -246,8 +246,8 @@ export class ProductService {
           description: 'Ensemble jogging premium pour un style décontracté mais raffiné.',
           price: 129.99,
           images: [
-            'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=800&auto=format&fit=crop'
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdecZFtyDwFBFRTv0BnenoySYHHxGLaCfck9u3UDoyc6q1nAgfLsp0ilAMIUnopFBtNiw&usqp=CAU',
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdecZFtyDwFBFRTv0BnenoySYHHxGLaCfck9u3UDoyc6q1nAgfLsp0ilAMIUnopFBtNiw&usqp=CAU'
           ],
           stock: 25,
           brand: 'Athleisure',

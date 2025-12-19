@@ -28,6 +28,12 @@ export class ProductCardComponent {
    */
   onAddToCart(event: Event): void {
     event.stopPropagation();
+    
+    // Empêcher l'ajout si rupture de stock
+    if (this.product.stock === 0) {
+      return;
+    }
+    
     this.addToCart.emit(this.product);
   }
 
