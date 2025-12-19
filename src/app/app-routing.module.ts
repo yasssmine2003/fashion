@@ -56,11 +56,16 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   { path: 'products', loadChildren: () => import('./products/products.module').then(m => m.ProductsModule) },
+  { path: 'categories', loadChildren: () => import('./categories/categories.module').then(m => m.CategoriesModule) },
   
   // 404 Not Found (À créer plus tard)
   {
     path: '**',
     redirectTo: ''
+  },
+  {
+    path: 'auth',
+    loadChildren: () => import('./features/auth/auth.module').then(m => m.AuthModule)
   }
 ];
 

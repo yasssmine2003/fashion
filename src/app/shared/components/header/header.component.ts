@@ -1,8 +1,9 @@
+// Version simplifiée sans CategoryService
 import { Component, OnInit, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '@core/services/auth.service';
-import { User } from '@core/models/user.model';
 import { Observable } from 'rxjs';
+import { User } from '@core/models/user.model';
 
 @Component({
   selector: 'app-header',
@@ -22,8 +23,18 @@ export class HeaderComponent implements OnInit {
   // Scroll state
   isScrolled = false;
   
-  // Nombre d'items dans le panier (sera implémenté avec CartService)
+  // Nombre d'items dans le panier
   cartItemCount = 0;
+
+  // Catégories statiques (en attendant le service)
+  mainCategories = [
+    { slug: 'robes', name: 'Robes', icon: '👗', count: 24 },
+    { slug: 'hauts', name: 'Hauts', icon: '👚', count: 42 },
+    { slug: 'pantalons', name: 'Pantalons', icon: '👖', count: 36 },
+    { slug: 'jupes', name: 'Jupes', icon: '👘', count: 18 },
+    { slug: 'vestes', name: 'Vestes', icon: '🧥', count: 15 },
+    { slug: 'manteaux', name: 'Manteaux', icon: '🧣', count: 12 }
+  ];
 
   constructor(
     private authService: AuthService,
@@ -31,79 +42,68 @@ export class HeaderComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // S'abonner à l'état d'authentification
     this.currentUser$ = this.authService.currentUser$;
     this.isAuthenticated$ = this.authService.isAuthenticated$;
   }
 
-  /**
-   * Détecter le scroll pour changer le style du header
-   */
   @HostListener('window:scroll', [])
   onWindowScroll(): void {
     this.isScrolled = window.scrollY > 50;
   }
 
-  /**
-   * Toggle menu mobile
-   */
   toggleMobileMenu(): void {
     this.isMobileMenuOpen = !this.isMobileMenuOpen;
   }
 
-  /**
-   * Toggle menu utilisateur
-   */
   toggleUserMenu(): void {
     this.isUserMenuOpen = !this.isUserMenuOpen;
   }
 
-  /**
-   * Fermer les menus
-   */
-  closeMenus(): void {
+  closeAllMenus(): void {
     this.isMobileMenuOpen = false;
     this.isUserMenuOpen = false;
   }
 
-  /**
-   * Navigation vers la page de recherche
-   */
-  onSearch(query: string): void {
-    if (query.trim()) {
-      this.router.navigate(['/products'], { queryParams: { search: query } });
-      this.closeMenus();
-    }
+  closeMenus(): void {
+    this.closeAllMenus();
   }
 
-  /**
-   * Déconnexion
-   */
   logout(): void {
     this.authService.logout();
-    this.closeMenus();
+    this.closeAllMenus();
+    this.router.navigate(['/']);
   }
 
-  /**
-   * Naviguer vers le profil
-   */
   goToProfile(): void {
     this.router.navigate(['/profile']);
-    this.closeMenus();
+    this.closeAllMenus();
   }
 
-  /**
-   * Naviguer vers le dashboard admin
-   */
   goToAdmin(): void {
     this.router.navigate(['/admin']);
-    this.closeMenus();
+    this.closeAllMenus();
   }
 
-  /**
-   * Vérifier si l'utilisateur est admin
-   */
+  goToCategory(categorySlug: string): void {
+    this.router.navigate(['/products'], { queryParams: { category: categorySlug } });
+    this.closeAllMenus();
+  }
+
+  goToCategories(): void {
+    this.router.navigate(['/categories']);
+    this.closeAllMenus();
+  }
+
   isAdmin(): boolean {
     return this.authService.isAdmin;
+  }
+
+  getMainCategories(): any[] {
+    return this.mainCategories;
+  }
+
+  getCategoryIcon(categorySlug: string): string {
+    const category = this.mainCategories.find(c => c.slug === categorySlug);
+    return category ? category.icon : '🛍️';
   }
 }

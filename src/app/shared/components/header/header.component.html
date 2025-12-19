@@ -1,4 +1,5 @@
-<header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+<header 
+  class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
   [class.bg-white]="isScrolled"
   [class.shadow-md]="isScrolled"
   [class.bg-white]="!isScrolled"
@@ -25,14 +26,80 @@
            class="text-neutral-700 hover:text-primary-coral font-medium transition-colors duration-300">
           Accueil
         </a>
-        <a routerLink="/products" routerLinkActive="text-primary-coral"
-           class="text-neutral-700 hover:text-primary-coral font-medium transition-colors duration-300">
-          Produits
-        </a>
-        <a routerLink="/categories" routerLinkActive="text-primary-coral"
-           class="text-neutral-700 hover:text-primary-coral font-medium transition-colors duration-300">
-          Catégories
-        </a>
+        
+        <!-- Produits Menu -->
+        <div class="relative group">
+          <a routerLink="/products" routerLinkActive="text-primary-coral"
+             class="text-neutral-700 hover:text-primary-coral font-medium transition-colors duration-300 flex items-center gap-1 cursor-pointer">
+            Produits
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </a>
+          
+          <!-- Dropdown Produits -->
+          <div class="absolute top-full left-0 mt-2 w-56 bg-white rounded-xl shadow-lg py-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+            <a routerLink="/products" routerLinkActive="text-primary-coral" 
+               [routerLinkActiveOptions]="{exact: true}"
+               (click)="closeMenus()"
+               class="block px-4 py-3 text-sm text-neutral-700 hover:bg-neutral-50 hover:text-primary-pink transition-colors">
+              Tous les produits
+            </a>
+            <a routerLink="/products/new" 
+               (click)="closeMenus()"
+               class="block px-4 py-3 text-sm text-neutral-700 hover:bg-neutral-50 hover:text-primary-pink transition-colors">
+              🆕 Nouveautés
+            </a>
+            <a routerLink="/products/trending" 
+               (click)="closeMenus()"
+               class="block px-4 py-3 text-sm text-neutral-700 hover:bg-neutral-50 hover:text-primary-pink transition-colors">
+              🔥 Tendances
+            </a>
+            <a routerLink="/products/sale" 
+               (click)="closeMenus()"
+               class="block px-4 py-3 text-sm text-neutral-700 hover:bg-neutral-50 hover:text-primary-pink transition-colors">
+              💰 Promotions
+            </a>
+            <hr class="my-2 border-neutral-100">
+            <a routerLink="/products" [queryParams]="{ sort: 'bestSeller' }"
+               (click)="closeMenus()"
+               class="block px-4 py-3 text-sm text-neutral-700 hover:bg-neutral-50 hover:text-primary-pink transition-colors">
+              ⭐ Best Sellers
+            </a>
+          </div>
+        </div>
+        
+        <!-- Catégories Menu -->
+        <div class="relative group">
+          <button class="text-neutral-700 hover:text-primary-coral font-medium transition-colors duration-300 flex items-center gap-1">
+            Catégories
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </button>
+          
+          <!-- Dropdown Catégories -->
+          <div class="absolute top-full left-0 mt-2 w-64 bg-white rounded-xl shadow-lg py-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+            <!-- Catégories principales -->
+            <a *ngFor="let category of getMainCategories()"
+               (click)="goToCategory(category.slug)"
+               class="block px-4 py-3 text-sm text-neutral-700 hover:bg-neutral-50 hover:text-primary-pink transition-colors cursor-pointer">
+              <div class="flex justify-between items-center">
+                <div class="flex items-center gap-2">
+                  <span>{{ getCategoryIcon(category.slug) }}</span>
+                  <span>{{ category.name }}</span>
+                </div>
+                <span class="text-xs text-neutral-500">{{ category.productCount }}</span>
+              </div>
+            </a>
+            <hr class="my-2 border-neutral-100">
+            <a (click)="goToCategories()"
+               class="block px-4 py-3 text-sm font-medium text-primary-pink hover:bg-primary-pink/10 transition-colors cursor-pointer">
+              Voir toutes les catégories →
+            </a>
+          </div>
+        </div>
+        
         <a routerLink="/about" routerLinkActive="text-primary-coral"
            class="text-neutral-700 hover:text-primary-coral font-medium transition-colors duration-300">
           À propos
@@ -47,7 +114,8 @@
       <div class="flex items-center space-x-4">
         
         <!-- Search Icon -->
-        <button class="p-2 rounded-lg hover:bg-neutral-100 transition-colors duration-300 hidden sm:block"
+        <button 
+          class="p-2 rounded-lg hover:bg-neutral-100 transition-colors duration-300 hidden sm:block"
           aria-label="Rechercher">
           <svg class="w-6 h-6 text-neutral-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
@@ -55,73 +123,111 @@
         </button>
 
         <!-- Cart -->
-        <a routerLink="/cart" class="relative p-2 rounded-lg hover:bg-neutral-100 transition-colors duration-300">
+        <a routerLink="/cart" 
+           class="relative p-2 rounded-lg hover:bg-neutral-100 transition-colors duration-300">
           <svg class="w-6 h-6 text-neutral-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
           </svg>
           <span *ngIf="cartItemCount > 0" 
-            class="absolute -top-1 -right-1 bg-primary-coral text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                class="absolute -top-1 -right-1 bg-primary-coral text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center animate-pulse">
             {{ cartItemCount }}
           </span>
         </a>
 
         <!-- User Menu -->
-        <div class="relative" *ngIf="isAuthenticated$ | async; else loginButton">
-          <button (click)="toggleUserMenu()"
-            class="flex items-center space-x-2 p-2 rounded-lg hover:bg-neutral-100 transition-colors duration-300">
-            <img [src]="(currentUser$ | async)?.avatar || 'https://i.pravatar.cc/150'" 
-              alt="User avatar"
-              class="w-8 h-8 rounded-full object-cover">
-            <span class="hidden lg:block text-sm font-medium text-neutral-700">
-              {{ (currentUser$ | async)?.firstName }}
-            </span>
-            <svg class="w-4 h-4 text-neutral-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-            </svg>
-          </button>
-
-          <!-- Dropdown Menu -->
-          <div *ngIf="isUserMenuOpen"
-            class="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg py-2 animate-slide-down">
-            
-            <a *ngIf="isAdmin()" (click)="goToAdmin()" 
-              class="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-50 cursor-pointer">
-              🎛️ Dashboard Admin
-            </a>
-            
-            <a (click)="goToProfile()" 
-              class="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-50 cursor-pointer">
-              👤 Mon Profil
-            </a>
-            
-            <a routerLink="/orders" (click)="closeMenus()"
-              class="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-50">
-              📦 Mes Commandes
-            </a>
-            
-            <a routerLink="/wishlist" (click)="closeMenus()"
-              class="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-50">
-              ❤️ Favoris
-            </a>
-            
-            <hr class="my-2">
-            
-            <button (click)="logout()"
-              class="w-full text-left px-4 py-2 text-sm text-error hover:bg-neutral-50">
-              🚪 Déconnexion
+        <div class="relative">
+          <div *ngIf="(isAuthenticated$ | async); else loginButton">
+            <!-- Bouton utilisateur connecté -->
+            <button 
+              (click)="toggleUserMenu()"
+              class="flex items-center space-x-2 p-2 rounded-lg hover:bg-neutral-100 transition-colors duration-300">
+              <img 
+                [src]="(currentUser$ | async)?.avatar || 'https://i.pravatar.cc/150'" 
+                alt="User avatar"
+                class="w-8 h-8 rounded-full object-cover border-2 border-white shadow-sm">
+              <span class="hidden lg:block text-sm font-medium text-neutral-700">
+                {{ (currentUser$ | async)?.firstName }}
+              </span>
+              <svg class="w-4 h-4 text-neutral-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
             </button>
+
+            <!-- Dropdown Menu (visible quand connecté) -->
+            <div 
+              *ngIf="isUserMenuOpen"
+              class="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg py-2 animate-slide-down z-50 border border-neutral-100">
+              
+              <a *ngIf="isAdmin()" 
+                 (click)="goToAdmin()" 
+                 class="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-50 cursor-pointer flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"/>
+                </svg>
+                Dashboard Admin
+              </a>
+              
+              <a (click)="goToProfile()" 
+                 class="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-50 cursor-pointer flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                </svg>
+                Mon Profil
+              </a>
+              
+              <a routerLink="/orders" (click)="closeMenus()"
+                 class="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-50 flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+                </svg>
+                Mes Commandes
+              </a>
+              
+              <a routerLink="/wishlist" (click)="closeMenus()"
+                 class="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-50 flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                </svg>
+                Favoris
+              </a>
+              
+              <hr class="my-2 border-neutral-100">
+              
+              <button 
+                (click)="logout()"
+                class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/>
+                </svg>
+                Déconnexion
+              </button>
+            </div>
           </div>
+
+          <!-- Template pour le bouton de connexion (quand non connecté) -->
+          <ng-template #loginButton>
+            <!-- Version desktop -->
+            <a routerLink="/auth/login" 
+               class="btn-secondary text-sm px-6 py-2 hidden sm:inline-flex items-center gap-2 hover:scale-105 transition-transform hover:shadow-md">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/>
+              </svg>
+              Connexion
+            </a>
+            
+            <!-- Version mobile -->
+            <a routerLink="/auth/login" 
+               class="md:hidden p-2 rounded-lg hover:bg-neutral-100 transition-colors duration-300">
+              <svg class="w-6 h-6 text-neutral-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/>
+              </svg>
+            </a>
+          </ng-template>
         </div>
 
-        <!-- Login Button -->
-        <ng-template #loginButton>
-          <a routerLink="/auth/login" class="btn-secondary text-sm px-6 py-2 hidden sm:block">
-            Connexion
-          </a>
-        </ng-template>
-
         <!-- Mobile Menu Toggle -->
-        <button (click)="toggleMobileMenu()"
+        <button 
+          (click)="toggleMobileMenu()"
           class="md:hidden p-2 rounded-lg hover:bg-neutral-100 transition-colors duration-300">
           <svg *ngIf="!isMobileMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
@@ -135,36 +241,99 @@
   </div>
 
   <!-- Mobile Menu -->
-  <div *ngIf="isMobileMenuOpen"
-    class="md:hidden bg-white border-t border-neutral-200 animate-slide-down">
-    <nav class="container-custom py-4 space-y-2">
+  <div 
+    *ngIf="isMobileMenuOpen"
+    class="md:hidden bg-white border-t border-neutral-200 animate-slide-down shadow-lg">
+    <nav class="container-custom py-6 space-y-1">
       <a routerLink="/" (click)="closeMenus()"
-        class="block px-4 py-3 rounded-lg text-neutral-700 hover:bg-neutral-50 font-medium">
-        🏠 Accueil
-      </a>
-      <a routerLink="/products" (click)="closeMenus()"
-        class="block px-4 py-3 rounded-lg text-neutral-700 hover:bg-neutral-50 font-medium">
-        🛍️ Produits
-      </a>
-      <a routerLink="/categories" (click)="closeMenus()"
-        class="block px-4 py-3 rounded-lg text-neutral-700 hover:bg-neutral-50 font-medium">
-        📂 Catégories
-      </a>
-      <a routerLink="/about" (click)="closeMenus()"
-        class="block px-4 py-3 rounded-lg text-neutral-700 hover:bg-neutral-50 font-medium">
-        ℹ️ À propos
-      </a>
-      <a routerLink="/contact" (click)="closeMenus()"
-        class="block px-4 py-3 rounded-lg text-neutral-700 hover:bg-neutral-50 font-medium">
-        📧 Contact
+         class="block px-4 py-4 rounded-lg text-neutral-700 hover:bg-neutral-50 font-medium flex items-center gap-3">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+        </svg>
+        Accueil
       </a>
       
-      <div *ngIf="!(isAuthenticated$ | async)" class="pt-4">
-        <a routerLink="/auth/login" (click)="closeMenus()"
-          class="block w-full btn-secondary text-center">
-          Connexion
+      <div class="pl-4">
+        <div class="text-sm font-medium text-neutral-500 px-4 py-2">PRODUITS</div>
+        <a routerLink="/products" (click)="closeMenus()"
+           class="block px-4 py-3 rounded-lg text-neutral-700 hover:bg-neutral-50 font-medium">
+          Tous les produits
+        </a>
+        <a routerLink="/products/new" (click)="closeMenus()"
+           class="block px-4 py-3 rounded-lg text-neutral-700 hover:bg-neutral-50 font-medium">
+          🆕 Nouveautés
+        </a>
+        <a routerLink="/products/trending" (click)="closeMenus()"
+           class="block px-4 py-3 rounded-lg text-neutral-700 hover:bg-neutral-50 font-medium">
+          🔥 Tendances
+        </a>
+        <a routerLink="/products/sale" (click)="closeMenus()"
+           class="block px-4 py-3 rounded-lg text-neutral-700 hover:bg-neutral-50 font-medium">
+          💰 Promotions
         </a>
       </div>
+      
+      <div class="pl-4">
+        <div class="text-sm font-medium text-neutral-500 px-4 py-2">CATÉGORIES</div>
+        <a *ngFor="let category of getMainCategories()"
+           (click)="goToCategory(category.slug)"
+           class="block px-4 py-3 rounded-lg text-neutral-700 hover:bg-neutral-50 font-medium flex items-center justify-between cursor-pointer">
+          <div class="flex items-center gap-2">
+            <span>{{ getCategoryIcon(category.slug) }}</span>
+            <span>{{ category.name }}</span>
+          </div>
+          <span class="text-xs text-neutral-500">{{ category.productCount }}</span>
+        </a>
+        <a routerLink="/categories" (click)="closeMenus()"
+           class="block px-4 py-3 rounded-lg text-primary-pink hover:bg-primary-pink/10 font-medium">
+          Voir toutes les catégories →
+        </a>
+      </div>
+      
+      <a routerLink="/about" (click)="closeMenus()"
+         class="block px-4 py-4 rounded-lg text-neutral-700 hover:bg-neutral-50 font-medium flex items-center gap-3">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+        À propos
+      </a>
+      <a routerLink="/contact" (click)="closeMenus()"
+         class="block px-4 py-4 rounded-lg text-neutral-700 hover:bg-neutral-50 font-medium flex items-center gap-3">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+        </svg>
+        Contact
+      </a>
+      
+      <!-- Mobile User Actions -->
+      <div *ngIf="(isAuthenticated$ | async); else mobileLoginButton" class="pt-6 border-t border-neutral-200">
+        <div class="text-sm font-medium text-neutral-500 px-4 py-2">MON COMPTE</div>
+        <a (click)="goToProfile()"
+           class="block px-4 py-3 rounded-lg text-neutral-700 hover:bg-neutral-50 font-medium cursor-pointer">
+          Mon Profil
+        </a>
+        <a routerLink="/orders" (click)="closeMenus()"
+           class="block px-4 py-3 rounded-lg text-neutral-700 hover:bg-neutral-50 font-medium">
+          Mes Commandes
+        </a>
+        <a routerLink="/wishlist" (click)="closeMenus()"
+           class="block px-4 py-3 rounded-lg text-neutral-700 hover:bg-neutral-50 font-medium">
+          Favoris
+        </a>
+        <button (click)="logout()"
+                class="w-full text-left px-4 py-3 rounded-lg text-red-600 hover:bg-red-50 font-medium mt-2">
+          Déconnexion
+        </button>
+      </div>
+      
+      <ng-template #mobileLoginButton>
+        <div class="pt-6 border-t border-neutral-200">
+          <a routerLink="/auth/login" (click)="closeMenus()"
+             class="block w-full btn-secondary text-center py-3">
+            Connexion / Inscription
+          </a>
+        </div>
+      </ng-template>
     </nav>
   </div>
 </header>

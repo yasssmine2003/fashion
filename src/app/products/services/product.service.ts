@@ -521,4 +521,24 @@ export class ProductService {
       }
     });
   }
+  // Ajoutez dans product.service.ts
+getProductsByCategory(categorySlug: string, filter?: ProductFilter, page = 1, limit = 12): Observable<{ products: Product[]; total: number }> {
+    let filteredProducts = this.mockProducts.filter(p => 
+      p.category.toLowerCase() === categorySlug.toLowerCase() ||
+      p.subcategory?.toLowerCase() === categorySlug.toLowerCase()
+    );
+  
+    if (filter) {
+      filteredProducts = this.applyFilters(filteredProducts, filter);
+    }
+  
+    const startIndex = (page - 1) * limit;
+    const endIndex = startIndex + limit;
+    const paginatedProducts = filteredProducts.slice(startIndex, endIndex);
+  
+    return of({
+      products: paginatedProducts,
+      total: filteredProducts.length
+    });
+  }
 }

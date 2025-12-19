@@ -1,0 +1,46 @@
+// Animations pour les éléments flottants
+@keyframes float {
+    0%, 100% {
+      transform: translateY(0) scale(1);
+    }
+    50% {
+      transform: translateY(-20px) scale(1.05);
+    }
+  }
+  
+  // Animation pour le spinner de chargement
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  // Effet de focus sur les inputs
+  .input-field:focus {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 182, 193, 0.3);
+  }
+  
+  // Animation d'entrée pour la card
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  // Checkbox custom style
+  input[type="checkbox"]:checked {
+    background-color: #FFB6C1;
+    border-color: #FFB6C1;
+  }
+  
+  // Hover effect sur les boutons sociaux
+  button:hover svg {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+  }

@@ -1,0 +1,200 @@
+<!-- src/app/categories/category-list/category-list.component.html -->
+<div class="min-h-screen bg-neutral-50">
+  
+    <!-- Hero Section -->
+    <div class="bg-gradient-to-r from-primary-pink/10 to-primary-coral/10 py-16">
+      <div class="container-custom">
+        <div class="text-center">
+          <h1 class="text-4xl md:text-5xl font-heading font-bold text-neutral-900 mb-4">
+            Nos Catégories
+          </h1>
+          <p class="text-lg text-neutral-600 max-w-2xl mx-auto">
+            Parcourez notre vaste collection organisée par catégories pour trouver exactement ce que vous cherchez
+          </p>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Loading State -->
+    <div *ngIf="loading" class="container-custom py-12">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div *ngFor="let i of [1,2,3,4,5,6,7,8]" class="animate-pulse">
+          <div class="bg-neutral-200 aspect-[4/3] rounded-xl mb-4"></div>
+          <div class="h-6 bg-neutral-200 rounded mb-2"></div>
+          <div class="h-4 bg-neutral-200 rounded w-2/3"></div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Error State -->
+    <div *ngIf="error && !loading" class="container-custom py-12 text-center">
+      <div class="text-5xl mb-4">😔</div>
+      <h2 class="text-2xl font-bold text-neutral-900 mb-4">
+        Oups ! Une erreur est survenue
+      </h2>
+      <p class="text-neutral-600 mb-8">
+        Impossible de charger les catégories. Veuillez réessayer.
+      </p>
+      <button 
+        (click)="loadCategories()"
+        class="btn-primary">
+        Réessayer
+      </button>
+    </div>
+  
+    <!-- Categories Grid -->
+    <div *ngIf="!loading && !error" class="container-custom py-12">
+      
+      <!-- Featured Categories -->
+      <section class="mb-16">
+        <h2 class="text-2xl font-heading font-bold text-neutral-900 mb-8 text-center">
+          Catégories Populaires
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div *ngFor="let category of getFeaturedCategories()" 
+               class="group relative overflow-hidden rounded-2xl bg-white shadow-sm hover:shadow-xl transition-all duration-500">
+            
+            <a [routerLink]="['/products']" [queryParams]="{ category: category.slug }" class="block">
+              <!-- Image -->
+              <div class="relative overflow-hidden aspect-[4/3] bg-neutral-100">
+                <img 
+                  [src]="category.image" 
+                  [alt]="category.name"
+                  class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+                
+                <!-- Badge -->
+                <div class="absolute top-4 left-4">
+                  <span class="badge-new text-xs px-3 py-1">
+                    POPULAIRE
+                  </span>
+                </div>
+              </div>
+  
+              <!-- Content -->
+              <div class="p-6">
+                <h3 class="text-xl font-semibold text-neutral-900 mb-2 group-hover:text-primary-coral transition-colors">
+                  {{ category.name }}
+                </h3>
+                <p class="text-sm text-neutral-600 mb-4 line-clamp-2">
+                  {{ category.description }}
+                </p>
+                <div class="flex justify-between items-center">
+                  <span class="text-sm font-medium text-primary-pink">
+                    {{ category.productCount }} produits
+                  </span>
+                  <span class="text-primary-pink group-hover:translate-x-2 transition-transform">
+                    →
+                  </span>
+                </div>
+              </div>
+            </a>
+  
+            <!-- Subcategories Flyout -->
+            <div *ngIf="category.subcategories && category.subcategories.length > 0"
+                 class="absolute top-full left-0 right-0 bg-white shadow-lg rounded-b-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-10">
+              <div class="p-4">
+                <h4 class="font-medium text-neutral-900 mb-3">Sous-catégories</h4>
+                <div class="space-y-2">
+                  <a *ngFor="let subcat of category.subcategories"
+                     [routerLink]="['/products']" 
+                     [queryParams]="{ category: subcat.slug }"
+                     class="block text-sm text-neutral-700 hover:text-primary-pink hover:bg-neutral-50 px-3 py-2 rounded-lg transition-colors">
+                    {{ subcat.name }}
+                    <span class="text-xs text-neutral-500 ml-2">({{ subcat.productCount }})</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+  
+      <!-- All Categories -->
+      <section>
+        <h2 class="text-2xl font-heading font-bold text-neutral-900 mb-8 text-center">
+          Toutes les Catégories
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div *ngFor="let category of getRegularCategories()" 
+               class="group bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
+            
+            <a [routerLink]="['/products']" [queryParams]="{ category: category.slug }" class="block p-6">
+              <div class="flex items-start gap-4">
+                <!-- Icon -->
+                <div class="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-primary-pink/20 to-primary-coral/20 rounded-lg flex items-center justify-center">
+                  <span class="text-xl font-bold text-primary-pink">
+                    {{ category.name.charAt(0) }}
+                  </span>
+                </div>
+  
+                <!-- Info -->
+                <div class="flex-1">
+                  <h3 class="font-semibold text-neutral-900 mb-1 group-hover:text-primary-coral transition-colors">
+                    {{ category.name }}
+                  </h3>
+                  <p class="text-sm text-neutral-600 mb-3 line-clamp-2">
+                    {{ category.description }}
+                  </p>
+                  <div class="flex justify-between items-center">
+                    <span class="text-xs text-neutral-500">
+                      {{ category.productCount }} produits
+                    </span>
+                    <span class="text-primary-pink text-sm font-medium">
+                      Explorer
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </section>
+  
+      <!-- Category Benefits -->
+      <section class="mt-20">
+        <div class="bg-gradient-to-r from-primary-pink/5 to-primary-coral/5 rounded-2xl p-8">
+          <h2 class="text-2xl font-heading font-bold text-neutral-900 mb-6 text-center">
+            Pourquoi acheter par catégorie ?
+          </h2>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="text-center">
+              <div class="w-16 h-16 bg-primary-pink/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8 text-primary-pink" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                </svg>
+              </div>
+              <h3 class="font-semibold text-neutral-900 mb-2">Trouvez rapidement</h3>
+              <p class="text-neutral-600 text-sm">
+                Naviguez facilement dans notre vaste collection
+              </p>
+            </div>
+            <div class="text-center">
+              <div class="w-16 h-16 bg-primary-pink/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8 text-primary-pink" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+              </div>
+              <h3 class="font-semibold text-neutral-900 mb-2">Choix ciblé</h3>
+              <p class="text-neutral-600 text-sm">
+                Découvrez des produits spécifiques à vos besoins
+              </p>
+            </div>
+            <div class="text-center">
+              <div class="w-16 h-16 bg-primary-pink/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8 text-primary-pink" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                </svg>
+              </div>
+              <h3 class="font-semibold text-neutral-900 mb-2">Tendances par catégorie</h3>
+              <p class="text-neutral-600 text-sm">
+                Restez à jour avec les dernières modes dans chaque catégorie
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+  
+    </div>
+  
+  </div>

@@ -1,7 +1,7 @@
-// app.module.ts
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -9,7 +9,7 @@ import { AppComponent } from './app.component';
 // Core Module
 import { CoreModule } from './core/core.module';
 
-// Shared Module - AJOUTER CET IMPORT
+// Shared Module
 import { SharedModule } from './shared/shared.module';
 
 // NGX-Toastr
@@ -22,12 +22,13 @@ import { ToastrModule } from 'ngx-toastr';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    HttpClientModule, // IMPORTANT : Pour les requêtes HTTP
     AppRoutingModule,
     
-    // Core Module
+    // Core Module (Guards, Interceptors, Services)
     CoreModule,
     
-    // Shared Module - AJOUTER CETTE LIGNE
+    // Shared Module (Header, Footer, Components)
     SharedModule,
     
     // NGX-Toastr Configuration

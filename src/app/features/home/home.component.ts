@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import * as AOS from 'aos';
 
 @Component({
@@ -6,14 +6,41 @@ import * as AOS from 'aos';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, AfterViewInit {
+
+  // Images Instagram pour la grid
+  private instagramImages = [
+    '1515886657613-9f3515b0c78f',
+    '1483985988355-763728e1935b',
+    '1490481651871-ab68de25d43d',
+    '1445205170230-053b83016050',
+    '1539008835657-9e8e9680c956',
+    '1564859228273-274232fdb516',
+    '1558769132-cb1aea1c36ec',
+    '1521572163474-6864f9cf17ab'
+  ];
 
   ngOnInit(): void {
-    // Initialiser AOS (Animate On Scroll)
-    AOS.init({
-      duration: 1000,
-      once: true,
-      offset: 100
-    });
+    // Scroll to top au chargement de la page
+    window.scrollTo(0, 0);
+  }
+
+  ngAfterViewInit(): void {
+    // Initialiser AOS après le chargement de la vue
+    setTimeout(() => {
+      AOS.init({
+        duration: 1000,
+        once: true,
+        offset: 100,
+        easing: 'ease-out'
+      });
+    }, 100);
+  }
+
+  /**
+   * Obtenir l'ID d'image Instagram pour la grid
+   */
+  getInstagramImage(index: number): string {
+    return this.instagramImages[index - 1] || this.instagramImages[0];
   }
 }
